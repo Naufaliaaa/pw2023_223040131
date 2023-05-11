@@ -112,14 +112,13 @@
   </main>
 
 
-  <footer class="bg-light text-lg-start">
+  <footer class="bg-light text-lg-start fixed-bottom">
 
 
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
       © 2023 Naufaliaaa:
       <a class="text-dark" href="mailto:naufalzul45@gmail.com">Naufalzul45@gmail.com</a>
     </div>
-    
   </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>

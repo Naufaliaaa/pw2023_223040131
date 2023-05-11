@@ -6,10 +6,6 @@
     <title>Pasundan Education</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body>
-
-  <header>
     <style>
       #intro {
         background-image: url("https://mdbootstrap.com/img/new/fluid/city/018.jpg");
@@ -20,6 +16,11 @@
         color: #fff !important;
       }
     </style>
+  </head>
+  <body>
+
+  <header>
+    
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
@@ -106,8 +107,8 @@
               </div>
 
 
-              <button type="submit" class="btn btn-primary btn-block mb-4">
-                Sign up
+              <button type="submit" class="btn btn-primary btn-block mb-4"">
+                <a href= "Login.php" style="color: white;">Sign up </a>
               </button>
 
             
@@ -121,7 +122,7 @@
 
 
 
-  <footer class="bg-light text-lg-start">
+  <footer class="bg-light text-lg-start fixed-bottom">
   
 
 
