@@ -1,3 +1,26 @@
+<?php 
+
+require('config/database.php');
+
+if(isset($_POST['submit'])) {
+  $nama_depan     = $_POST['nama_depan'];
+  $nama_belakang  = $_POST['nama_belakang'];
+  $email          = $_POST['email'];
+  $password       = $_POST['password'];
+  
+  $sql = "INSERT INTO pengguna(nama_depan, nama_belakang, email, password, level) VALUE('{$nama_depan}', '{$nama_belakang}', '{$email}', '{$password}', 'Pengguna')";
+  $query = mysqli_query($DB_CONNECTION, $sql);
+
+  echo "<script>alert('Register Berhasil!');</script>";
+  echo "<meta http-equiv='refresh' content='0; url=login.php'>";
+
+}
+
+
+?>
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -23,7 +46,7 @@
     
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-        <div class="container-fluid">
+        <div class="container">
             <a class="navbar-brand" href="index.php">Pasundan</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -34,7 +57,7 @@
                 <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Fasilitas</a>
+                <a class="nav-link" href="fasilitas.php">Fasilitas</a>
                 </li>
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -46,11 +69,6 @@
                 </ul>
                 </li>
             </ul>
-            <form class="d-flex justify-content-center" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-
             <nav class="navbar bg-body-tertiary">
         <form class="container-fluid justify-content-start">
             <a href="login.php" class="btn btn-outline-success me-2" type="button">Login</a>
@@ -70,17 +88,17 @@
 
         <div class="row d-flex justify-content-center">
           <div class="col-md-6">
-            <form>
+            <form action="" method="post">
               <div class="row mb-4">
                 <div class="col">
                   <div class="form-outline">
-                    <input type="text" id="form3Example1" class="form-control" />
+                    <input type="text" id="form3Example1" class="form-control" name="nama_depan"/>
                     <label class="form-label" for="form3Example1">First name</label>
                   </div>
                 </div>
                 <div class="col">
                   <div class="form-outline">
-                    <input type="text" id="form3Example2" class="form-control" />
+                    <input type="text" id="form3Example2" class="form-control" name="nama_belakang"/>
                     <label class="form-label" for="form3Example2">Last name</label>
                   </div>
                 </div>
@@ -88,13 +106,13 @@
 
 
               <div class="form-outline mb-4">
-                <input type="email" id="form3Example3" class="form-control" />
+                <input type="email" id="form3Example3" class="form-control" name="email"/>
                 <label class="form-label" for="form3Example3">Email address</label>
               </div>
 
 
               <div class="form-outline mb-4">
-                <input type="password" id="form3Example4" class="form-control" />
+                <input type="password" id="form3Example4" class="form-control" name="password"/>
                 <label class="form-label" for="form3Example4">Password</label>
               </div>
 
@@ -106,11 +124,7 @@
                 </label>
               </div>
 
-
-              <button type="submit" class="btn btn-primary btn-block mb-4"">
-                <a href= "Login.php" style="color: white;">Sign up </a>
-              </button>
-
+              <input name="submit" value="Sign Up" type="submit" class="btn btn-primary btn-block mb-4"">
             
             </form>
           </div>

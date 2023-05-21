@@ -1,3 +1,8 @@
+<?php 
+ require('../config/session.php');
+
+?>
+
 <html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,15 +51,17 @@
 </style></head>
 
   <body>
+
+  
     <div id="full-screen-example" class="sidenav bg-light sidenav-dark" data-color="dark" data-mode="side" data-hidden="false" data-scroll-container="#scrollContainer" style="width: 240px; height: 100vh; position: fixed; transition: all 0.3s linear 0s; transform: translateX(0%);">
       <div class="mt-4">
         <div id="header-content" class="pl-3">
-          <img  src="../img/foto aing.jfif" alt="avatar" class="rounded-circle img-fluid mb-3" style="max-width: 50px;">
+          <img  src="../img/default.png" alt="avatar" class="rounded-circle img-fluid mb-3" style="max-width: 50px;">
 
           <h4>
-            <span style="white-space: nowrap;">Naufaliaaa</span>
+            <span style="white-space: nowrap;"><?= $_SESSION['nama_depan']; ?></span>
           </h4>
-          <p>naufalzul45@gmail.com</p>
+          <p><?= $_SESSION['email']; ?></p>
         </div>
         <hr class="mb-0">
       </div>
@@ -62,6 +69,9 @@
         <ul class="sidenav-menu">
           <li class="sidenav-item">
             <a class="sidenav-link ripple-surface" href="/" tabindex="1"> <i class="fas fa-user-astronaut pr-3"></i>Dashboard</a>
+          </li>
+          <li class="sidenav-item">
+            <a class="sidenav-link ripple-surface" href="/admin/jurusan" tabindex="1"> <i class="fas fa-user-graduate pr-3"></i>Jurusan</a>
           </li>
           
         </ul>

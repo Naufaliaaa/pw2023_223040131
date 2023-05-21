@@ -1,3 +1,36 @@
+<?php
+require('config/database.php');
+
+session_start();
+
+if(isset($_POST['submit'])) {
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+
+  $sql = "SELECT * FROM `pengguna` WHERE `email` = '{$email}' AND `password` = '{$password}'";
+  $query = mysqli_query($DB_CONNECTION, $sql);
+
+  if($query->num_rows > 0) {
+      $user = mysqli_fetch_array($query);
+      $_SESSION['id_user']  = $user['id'];
+      $_SESSION['nama_depan']  = $user['nama_depan'];
+      $_SESSION['email'] = $user['email'];
+      $_SESSION['level']    = $user['level'];
+      echo "<script>alert('Login Berhasil!');</script>";
+
+      if($user['level'] == 'Admin'){
+          echo "<meta http-equiv='refresh' content='0; url=admin/'>";
+      } else {
+          echo "<meta http-equiv='refresh' content='0; url=user/'>";
+      }
+  } else {
+      echo "<script type='text/javascript'>alert('email dan password salah!');</script>";
+  }
+}
+
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -24,7 +57,7 @@
 
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-        <div class="container-fluid">
+        <div class="container">
             <a class="navbar-brand" href="index.php">Pasundan</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -35,7 +68,7 @@
                 <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Fasilitas</a>
+                <a class="nav-link" href="fasilitas.php">Fasilitas</a>
                 </li>
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,10 +80,6 @@
                 </ul>
                 </li>
             </ul>
-            <form class="d-flex justify-content-center" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
 
             <nav class="navbar bg-body-tertiary">
         <form class="container-fluid justify-content-start">
@@ -74,20 +103,20 @@
 
         <div class="row d-flex justify-content-center">
           <div class="col-md-6">
-            <form action="admin/index.php">
+            <form action="" method="post">
 
               <div class="row mb-4">
 
               <div class="form-outline mb-4">
                 
               <label class="form-label" for="form3Example3">Email address</label>
-                <input type="email" id="form3Example3" class="form-control" />
+                <input type="email" id="form3Example3" class="form-control" name="email" />
               </div>
 
 
               <div class="form-outline mb-4">
               <label class="form-label" for="form3Example4">Password</label>
-                <input type="password" id="form3Example4" class="form-control" />
+                <input type="password" id="form3Example4" class="form-control" name="password" />
               </div>
 
 
@@ -99,9 +128,7 @@
               </div>
 
 
-              <button type="submit" class="btn btn-primary btn-block mb-4">
-                Sign up
-              </button>
+              <input type="submit" name="submit" value="Sign Up" class="btn btn-primary btn-block mb-4">
 
             </form>
           </div>
