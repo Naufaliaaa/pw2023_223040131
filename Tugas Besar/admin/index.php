@@ -1,13 +1,18 @@
 <?php 
- require('../config/session.php');
-
+  require('../config/session.php');
+  require('../config/database.php');
+  
+  $sql = "SELECT pengguna.*, jurusan.nama AS nama_jurusan FROM `pengguna` INNER JOIN jurusan
+  ON pengguna.jurusan_id = jurusan.id WHERE level = 'Pengguna'";
+  $pengguna = mysqli_query($DB_CONNECTION, $sql);
+  
 ?>
 
 <html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Material Design for Bootstrap</title>
+    <title>Education - Dashboard</title>
     <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap">
@@ -47,8 +52,11 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><style>INPUT:-webkit-autofill,SELECT:-webkit-autofill,TEXTAREA:-webkit-autofill{animation-name:onautofillstart}INPUT:not(:-webkit-autofill),SELECT:not(:-webkit-autofill),TEXTAREA:not(:-webkit-autofill){animation-name:onautofillcancel}@keyframes onautofillstart{from{}}@keyframes onautofillcancel{from{}}
-</style></head>
+</style>
+
+</head>
 
   <body>
 
@@ -68,29 +76,63 @@
       <div id="scrollContainer" class="ps ps--active-y" style="max-height: calc(100% - 245px); position: relative;">
         <ul class="sidenav-menu">
           <li class="sidenav-item">
-            <a class="sidenav-link ripple-surface" href="/" tabindex="1"> <i class="fas fa-user-astronaut pr-3"></i>Dashboard</a>
+            <a class="sidenav-link ripple-surface" href="index.php" tabindex="1"> <i class="fas fa-user-astronaut pr-3"></i>Dashboard</a>
           </li>
           <li class="sidenav-item">
-            <a class="sidenav-link ripple-surface" href="/admin/jurusan" tabindex="1"> <i class="fas fa-user-graduate pr-3"></i>Jurusan</a>
+            <a class="sidenav-link ripple-surface" href="jurusan.php" tabindex="1"> <i class="fas fa-user-graduate pr-3"></i>Jurusan</a>
+          </li>
+          <li class="sidenav-item">
+            <a class="sidenav-link ripple-surface" href="mahasiswa.php" tabindex="1"> <i class="fas fa-user pr-3"></i>Mahasiswa</a>
           </li>
           
         </ul>
         <hr class="m-0">
         <ul class="sidenav-menu">
           <li class="sidenav-item">
-            <a class="sidenav-link ripple-surface" tabindex="1" href="../index.php"> <i class="fas fa-sign-out-alt pr-3"></i>Log out</a>
+            <a class="sidenav-link ripple-surface" tabindex="1" href="logout.php"> <i class="fas fa-sign-out-alt pr-3"></i>Log out</a>
           </li>
         </ul>
       <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 469px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 254px;"></div></div></div>
     </div>
 
-    <div class="mdb-page-content text-center page-intro bg-light">
-      <div class="text-center py-5">
-        <h3 class="my-5">Dashboard</h3>
-        
-        <button id="toggler" class="btn btn-dark mt-5" data-toggle="sidenav" data-target="#full-screen-example" aria-expanded="true">
-          <i class="fas fa-bars"></i>
-        </button>
+    <div class="mdb-page-content page-intro bg-light">
+      <div class="container-fluid py-3">
+        <div class="row">
+          <div class="col-10 m-auto">
+            <h4>Daftar Mahasiswa</h4>
+          </div>
+          <div class="col-10 m-auto">
+            <table class="table" id="myTable">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Nama Lengkap</th>
+                  <th scope="col">Jurusan</th>
+                  <th scope="col" class="text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                    $i = 1;
+                    while($data = mysqli_fetch_array($pengguna)) {
+                ?>
+                    <tr>
+                        <td class="text-center"><?php echo $i++; ?></td>
+                        <td><?php echo $data['nama_depan']; ?> <?php echo $data['nama_belakang']; ?></td>
+                        <td><?php echo $data['nama_jurusan']; ?></td>
+                        <td class="text-center">
+                            <a href="edit-mahasiswa.php?id=<?php echo $data['id']; ?>" class="btn btn-warning btn-sm">Ubah</a>
+                            <a href="hapus-mahasiswa.php?id=<?php echo $data['id']; ?>" class="btn btn-danger btn-sm confirm">Hapus</a>
+                        </td>
+                    </tr>
+                <?php
+                    }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -129,6 +171,10 @@
 
       window.addEventListener('resize', setMode);
     </script>
-  
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script>
+      let table = new DataTable('#myTable');
+    </script>
 
 </body></html>

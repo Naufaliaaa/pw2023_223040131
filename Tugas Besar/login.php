@@ -14,6 +14,7 @@ if(isset($_POST['submit'])) {
       $user = mysqli_fetch_array($query);
       $_SESSION['id_user']  = $user['id'];
       $_SESSION['nama_depan']  = $user['nama_depan'];
+      $_SESSION['nama_belakang']  = $user['nama_belakang'];
       $_SESSION['email'] = $user['email'];
       $_SESSION['level']    = $user['level'];
       echo "<script>alert('Login Berhasil!');</script>";

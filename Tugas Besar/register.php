@@ -2,13 +2,19 @@
 
 require('config/database.php');
 
+$getJurusan = "SELECT * FROM `jurusan`";
+$jurusan = mysqli_query($DB_CONNECTION, $getJurusan);
+ 
 if(isset($_POST['submit'])) {
+  
+  $jurusan_id     = $_POST['jurusan_id'];
   $nama_depan     = $_POST['nama_depan'];
   $nama_belakang  = $_POST['nama_belakang'];
+  $no_telepon     = $_POST['no_telepon'];
   $email          = $_POST['email'];
   $password       = $_POST['password'];
-  
-  $sql = "INSERT INTO pengguna(nama_depan, nama_belakang, email, password, level) VALUE('{$nama_depan}', '{$nama_belakang}', '{$email}', '{$password}', 'Pengguna')";
+
+  $sql = "INSERT INTO pengguna(jurusan_id, nama_depan, nama_belakang, no_telepon, email, password, level) VALUE('{$jurusan_id}', '{$nama_depan}', '{$nama_belakang}', '{$no_telepon}', '{$email}', '{$password}', 'Pengguna')";
   $query = mysqli_query($DB_CONNECTION, $sql);
 
   echo "<script>alert('Register Berhasil!');</script>";
@@ -88,7 +94,7 @@ if(isset($_POST['submit'])) {
 
         <div class="row d-flex justify-content-center">
           <div class="col-md-6">
-            <form action="" method="post">
+            <form action="" method="post" autocomplete="off">
               <div class="row mb-4">
                 <div class="col">
                   <div class="form-outline">
@@ -100,6 +106,31 @@ if(isset($_POST['submit'])) {
                   <div class="form-outline">
                     <input type="text" id="form3Example2" class="form-control" name="nama_belakang"/>
                     <label class="form-label" for="form3Example2">Last name</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col">
+                  <div class="form-outline">
+                    <input type="number" id="form3Example1" class="form-control" name="no_telepon"/>
+                    <label class="form-label" for="form3Example1">No Telepon</label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-outline">
+                    <select id="form3Example2" class="form-control" name="jurusan_id">
+                      <option value="">Pilih Jurusan</option>
+                        <?php
+                            $i = 1;
+                            while($data = mysqli_fetch_array($jurusan)) {
+                        ?>
+                        <option value="<?= $data['id']; ?>"><?= $data['nama']; ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    <label class="form-label" for="form3Example2">Jurusan</label>
                   </div>
                 </div>
               </div>
