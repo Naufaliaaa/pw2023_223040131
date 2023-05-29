@@ -186,7 +186,7 @@
                 </a>
               </div>
               <div class="card-body">
-                <h5 class="card-title"><a class="text-dark" href="https://www.unpas.ac.id/eksis-di-tanah-rencong-tim-mahasiswa-teknik-informatika-raih-juara-nasional-bmc-competition-unsyiah/">BMC Competition Unsyiah</a></h5>
+                <h5 class="card-title"><a class="text-dark" href="info_prestasi.php">BMC Competition Unsyiah</a></h5>
                 <p class="card-text">
                 Eksis Di Tanah Rencong, Tim Mahasiswa Teknik Informatika Raih Juara Nasional BMC Competition Unsyiah
                 </p>
@@ -203,7 +203,7 @@
                 </a>
               </div>
               <div class="card-body">
-              <h5 class="card-title"><a class="text-dark" href="https://www.unpas.ac.id/alumni-unpas-ciptakan-water-injection-system-bisa-hemat-bbm-dua-kali-lipat/">Hemat BBM Dua Kali Lipat</a></h5>
+              <h5 class="card-title"><a class="text-dark" href="info_prestasi.php">Hemat BBM Dua Kali Lipat</a></h5>
                 <p class="card-text">
                 Alumni Unpas Ciptakan Water Injection System, Bisa Hemat BBM Dua Kali Lipat
                 </p>
@@ -220,7 +220,7 @@
                 </a>
               </div>
               <div class="card-body">
-              <h5 class="card-title"><a class="text-dark" href="https://www.unpas.ac.id/mahasiswi-fkip-unpas-sabet-medali-emas-kejuaraan-menembak-kasau-cup/">Kejuaraan Menembak KASAU Cup</a></h5>
+              <h5 class="card-title"><a class="text-dark" href="info_prestasi.php">Kejuaraan Menembak KASAU Cup</a></h5>
                 <p class="card-text">
                 Mahasiswi FKIP Unpas Sabet Medali Emas Kejuaraan Menembak KASAU Cup
                 </p>

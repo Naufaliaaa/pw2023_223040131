@@ -24,6 +24,9 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Fasilitas</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="info_prestasi.php">Prestasi</a>
+            </li>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#jurusan">Jurusan</a></li>
                 <li><a class="dropdown-item" href="#prestasi">Prestasi</a></li>
