@@ -156,7 +156,8 @@
       
 
       <hr class="my-5" />
-
+      </div>
+            </main>
 
       
   <footer class="bg-light text-lg-start">
