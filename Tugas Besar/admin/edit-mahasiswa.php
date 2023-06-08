@@ -1,29 +1,59 @@
 <?php 
-  require('../config/session.php');
-  require('../config/database.php');
 
-  if($_SESSION['level'] != 'Admin'){
-    header("Location: ../user/index.php"); 
+require('../config/session.php');
+require('../config/database.php');
+
+if($_SESSION['level'] != 'Admin'){
+  header("Location: ../user/index.php"); 
+}
+
+$id = $_GET['id'];
+
+$sql = "SELECT * FROM pengguna WHERE id='$id'";
+$data = mysqli_query($DB_CONNECTION, $sql);
+$mahasiswa = mysqli_fetch_array($data);
+
+$getJurusan = "SELECT * FROM `jurusan`";
+$jurusan = mysqli_query($DB_CONNECTION, $getJurusan);
+
+if(isset($_POST['submit'])) {
+  
+  $nama_depan       = $_POST['nama_depan'];
+  $nama_belakang    = $_POST['nama_belakang'];
+  $email            = $_POST['email'];
+  $no_telepon       = $_POST['no_telepon'];
+  $jurusan_id       = $_POST['jurusan_id'];
+
+  $sql = "UPDATE pengguna SET 
+    nama_depan = '$nama_depan', 
+    nama_belakang = '$nama_belakang',
+    email = '$email', 
+    no_telepon = '$no_telepon',
+    jurusan_id = '$jurusan_id'
+  WHERE id = '$id'";
+  
+  $query = mysqli_query($DB_CONNECTION, $sql);
+
+  if($query){
+    echo "<script>alert('mahasiswa Berhasil Diubah!');</script>";
+    echo "<meta http-equiv='refresh' content='0; url=mahasiswa.php'>";
+  
+  } else{
+    echo "<script>alert('Mahasiswa Gagal Diubah!');</script>";
+  echo "<meta http-equiv='refresh' content='0; url=edit-mahasiswa.php'>";
+
   }
   
-  $sqlMahasiswa = "SELECT count(id) as jumlah_mahasiswa FROM `pengguna`";
+}
 
-  $sqlJurusan = "SELECT count(id) as jumlah_jurusan FROM `jurusan`";
 
-  $queryMahasiswa = mysqli_query($DB_CONNECTION, $sqlMahasiswa);
-  $queryJurusan = mysqli_query($DB_CONNECTION, $sqlJurusan);
-
-  $jumlahMahasiswa = mysqli_fetch_row($queryMahasiswa);
-
-  $jumlahJurusan = mysqli_fetch_row($queryJurusan);
-  
 ?>
 
 <html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Education - Dashboard</title>
+    <title>Education - Mahasiswa</title>
     <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap">
@@ -63,14 +93,10 @@
         }
       }
     </style>
-    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><style>INPUT:-webkit-autofill,SELECT:-webkit-autofill,TEXTAREA:-webkit-autofill{animation-name:onautofillstart}INPUT:not(:-webkit-autofill),SELECT:not(:-webkit-autofill),TEXTAREA:not(:-webkit-autofill){animation-name:onautofillcancel}@keyframes onautofillstart{from{}}@keyframes onautofillcancel{from{}}
-   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><style>INPUT:-webkit-autofill,SELECT:-webkit-autofill,TEXTAREA:-webkit-autofill{animation-name:onautofillstart}INPUT:not(:-webkit-autofill),SELECT:not(:-webkit-autofill),TEXTAREA:not(:-webkit-autofill){animation-name:onautofillcancel}@keyframes onautofillstart{from{}}@keyframes onautofillcancel{from{}}
+</style></head>
 
-   </head>
-
-   <body>
+  <body>
 
   
     <div id="full-screen-example" class="sidenav bg-light sidenav-dark" data-color="dark" data-mode="side" data-hidden="false" data-scroll-container="#scrollContainer" style="width: 240px; height: 100vh; position: fixed; transition: all 0.3s linear 0s; transform: translateX(0%);">
@@ -87,7 +113,8 @@
       </div>
       <div id="scrollContainer" class="ps ps--active-y" style="max-height: calc(100% - 245px); position: relative;">
         <ul class="sidenav-menu">
-          <li class="sidenav-item">
+
+        <li class="sidenav-item">
             <a class="sidenav-link ripple-surface" href="../index.php" tabindex="1"> <i class="fas fa-home pr-3"></i>Beranda</a>
           </li>
           <li class="sidenav-item">
@@ -104,7 +131,7 @@
         <hr class="m-0">
         <ul class="sidenav-menu">
           <li class="sidenav-item">
-            <a class="sidenav-link ripple-surface" tabindex="1" href="logout.php"> <i class="fas fa-sign-out-alt pr-3"></i>Log out</a>
+            <a class="sidenav-link ripple-surface" tabindex="1" href="../index.php"> <i class="fas fa-sign-out-alt pr-3"></i>Log out</a>
           </li>
         </ul>
       <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 469px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 254px;"></div></div></div>
@@ -112,34 +139,39 @@
 
     <div class="mdb-page-content page-intro bg-light">
       <div class="container-fluid py-3">
-        <div class="row d-flex justify-content-center">
-
-          <div class="col-md-5">
-            <div class="card">
-              <div class="card-title">
-                <div class="card-header">
-                  <h6>Jumlah Mahasiswa</h6>
-                </div>
-              </div>
-              <div class="card-body">
-                <h3><?= $jumlahMahasiswa[0] ?></h3>
-              </div>
-            </div>
+        <div class="row">
+          <div class="col-10 m-auto">
+            <h4>Ubah data mahasiswa</h4>
           </div>
-
-          <div class="col-md-5">
-            <div class="card">
-              <div class="card-title">
-                <div class="card-header">
-                  <h6>Jumlah Jurusan</h6>
+          <div class="col-10 m-auto">
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nama depan</label>
+                    <input name="nama_depan" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama" value="<?= $mahasiswa['nama_depan'] ?>">
                 </div>
-              </div>
-              <div class="card-body">
-                <h3><?= $jumlahJurusan[0] ?></h3>
-              </div>
-            </div>
+                <div class="form-group">
+                    <label for="namaBelakang">Nama belakang</label>
+                    <input name="nama_belakang" type="text" class="form-control" id="namaBelakang" aria-describedby="emailHelp" placeholder="Nama" value="<?= $mahasiswa['nama_belakang'] ?>">
+                </div>
+                <div class="form-group">
+                    <label for="jurusanId">Jurusan</label>
+                    <select name="jurusan_id" class="form-control" id="jurusanId">
+                        <?php foreach($jurusan as $j): ?>
+                        <option value="<?= $j['id'] ?>" <?= $j['id'] === $mahasiswa['jurusan_id'] ? 'selected' : ''; ?>><?= $j['nama']?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input name="email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama" value="<?= $mahasiswa['email'] ?>">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">No telepon</label>
+                    <input name="no_telepon" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama" value="<?= $mahasiswa['no_telepon'] ?>">
+                </div>
+                <input type="submit" class="btn btn-primary mt-2" value="Simpan" name="submit"></input>
+              </form>
           </div>
-
         </div>
 
       </div>
@@ -179,26 +211,9 @@
       setMode();
 
       window.addEventListener('resize', setMode);
-     </script>
-
-      <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-      <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-      <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-      <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
-      <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
-      
-     <script>
-      $(document).ready(function() {
-        $('#myTable').DataTable( {
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-        } );
-    } );
-      </script>
+    </script>
+    
+       <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  
 
 </body></html>

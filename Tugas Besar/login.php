@@ -3,6 +3,14 @@ require('config/database.php');
 
 session_start();
 
+if(isset($_SESSION['id_user'])){
+  if($_SESSION['level'] == 'Admin'){
+    header("Location: admin");
+  } else {
+    header("Location: user");
+  }
+} 
+
 if(isset($_POST['submit'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
@@ -78,8 +86,12 @@ if(isset($_POST['submit'])) {
 
             <nav class="navbar bg-body-tertiary">
         <form class="container-fluid justify-content-start">
-            <a href="login.php" class="btn btn-outline-success me-2" type="button">Login</a>
-            <a href="register.php" class="btn btn-sm btn-outline-secondary" type="button">Register</a>
+        <?php if(!isset($_SESSION['id_user'])): ?>
+        <a href="login.php" class="btn btn-outline-success me-2" type="button">Login</a>
+        <a href="register.php" class="btn btn-sm btn-outline-secondary" type="button">Register</a>
+        <?php else: ?>
+          <a href="admin" class="btn btn-outline-success me-2" type="button">Dashboard</a>
+        <?php endif; ?>
         </form>
         </nav>
             </div>
@@ -115,15 +127,8 @@ if(isset($_POST['submit'])) {
               </div>
 
 
-              <div class="form-check d-flex justify-content-center mb-4">
-                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" checked />
-                <label class="form-check-label" for="form2Example3">
-                  Subscribe to our newsletter
-                </label>
-              </div>
 
-
-              <input type="submit" name="submit" value="Sign Up" class="btn btn-primary btn-block mb-4">
+              <input type="submit" name="submit" value="Masuk" class="btn btn-primary btn-block mb-4">
 
             </form>
           </div>

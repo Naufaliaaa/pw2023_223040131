@@ -1,3 +1,7 @@
+<?php 
+  session_start();
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -47,8 +51,12 @@
 
           <nav class="navbar bg-body-tertiary">
       <form class="container-fluid justify-content-start">
+        <?php if(!isset($_SESSION['id_user'])): ?>
         <a href="login.php" class="btn btn-outline-success me-2" type="button">Login</a>
         <a href="register.php" class="btn btn-sm btn-outline-secondary" type="button">Register</a>
+        <?php else: ?>
+          <a href="admin" class="btn btn-outline-success me-2" type="button">Dashboard</a>
+        <?php endif; ?>
       </form>
     </nav>
     
